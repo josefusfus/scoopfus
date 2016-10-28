@@ -14,6 +14,7 @@
 		97763C331DC3E69400AF3EAE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97763C311DC3E69400AF3EAE /* LaunchScreen.storyboard */; };
 		97763C3B1DC3E83F00AF3EAE /* MicrosoftAzureMobile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97763C3A1DC3E83F00AF3EAE /* MicrosoftAzureMobile.framework */; };
 		97763C3F1DC3E93600AF3EAE /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97763C3E1DC3E93600AF3EAE /* WebKit.framework */; };
+		97763C421DC3EBFF00AF3EAE /* AutorTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97763C411DC3EBFF00AF3EAE /* AutorTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +28,7 @@
 		97763C3A1DC3E83F00AF3EAE /* MicrosoftAzureMobile.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MicrosoftAzureMobile.framework; sourceTree = "<group>"; };
 		97763C3C1DC3E88D00AF3EAE /* Scoopfus2-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Scoopfus2-Bridging-Header.h"; sourceTree = "<group>"; };
 		97763C3E1DC3E93600AF3EAE /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		97763C411DC3EBFF00AF3EAE /* AutorTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutorTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 		97763C241DC3E69000AF3EAE /* scoopfus2 */ = {
 			isa = PBXGroup;
 			children = (
+				97763C401DC3EBCF00AF3EAE /* Vcs */,
 				97763C3A1DC3E83F00AF3EAE /* MicrosoftAzureMobile.framework */,
 				97763C251DC3E69100AF3EAE /* AppDelegate.swift */,
 				97763C291DC3E69200AF3EAE /* Main.storyboard */,
@@ -80,6 +83,14 @@
 				97763C3E1DC3E93600AF3EAE /* WebKit.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		97763C401DC3EBCF00AF3EAE /* Vcs */ = {
+			isa = PBXGroup;
+			children = (
+				97763C411DC3EBFF00AF3EAE /* AutorTableViewController.swift */,
+			);
+			name = Vcs;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -157,6 +168,7 @@
 			files = (
 				97763C2E1DC3E69300AF3EAE /* scoopfus2.xcdatamodeld in Sources */,
 				97763C261DC3E69100AF3EAE /* AppDelegate.swift in Sources */,
+				97763C421DC3EBFF00AF3EAE /* AutorTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
