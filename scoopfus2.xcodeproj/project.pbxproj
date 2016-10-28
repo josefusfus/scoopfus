@@ -8,22 +8,25 @@
 
 /* Begin PBXBuildFile section */
 		97763C261DC3E69100AF3EAE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97763C251DC3E69100AF3EAE /* AppDelegate.swift */; };
-		97763C281DC3E69100AF3EAE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97763C271DC3E69100AF3EAE /* ViewController.swift */; };
 		97763C2B1DC3E69200AF3EAE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97763C291DC3E69200AF3EAE /* Main.storyboard */; };
 		97763C2E1DC3E69300AF3EAE /* scoopfus2.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 97763C2C1DC3E69300AF3EAE /* scoopfus2.xcdatamodeld */; };
 		97763C301DC3E69300AF3EAE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97763C2F1DC3E69300AF3EAE /* Assets.xcassets */; };
 		97763C331DC3E69400AF3EAE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97763C311DC3E69400AF3EAE /* LaunchScreen.storyboard */; };
+		97763C3B1DC3E83F00AF3EAE /* MicrosoftAzureMobile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97763C3A1DC3E83F00AF3EAE /* MicrosoftAzureMobile.framework */; };
+		97763C3F1DC3E93600AF3EAE /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97763C3E1DC3E93600AF3EAE /* WebKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		97763C221DC3E68F00AF3EAE /* scoopfus2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = scoopfus2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		97763C251DC3E69100AF3EAE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		97763C271DC3E69100AF3EAE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		97763C2A1DC3E69200AF3EAE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		97763C2D1DC3E69300AF3EAE /* scoopfus2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = scoopfus2.xcdatamodel; sourceTree = "<group>"; };
 		97763C2F1DC3E69300AF3EAE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		97763C321DC3E69400AF3EAE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		97763C341DC3E69400AF3EAE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		97763C3A1DC3E83F00AF3EAE /* MicrosoftAzureMobile.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MicrosoftAzureMobile.framework; sourceTree = "<group>"; };
+		97763C3C1DC3E88D00AF3EAE /* Scoopfus2-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Scoopfus2-Bridging-Header.h"; sourceTree = "<group>"; };
+		97763C3E1DC3E93600AF3EAE /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +34,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				97763C3F1DC3E93600AF3EAE /* WebKit.framework in Frameworks */,
+				97763C3B1DC3E83F00AF3EAE /* MicrosoftAzureMobile.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -40,8 +45,10 @@
 		97763C191DC3E68E00AF3EAE = {
 			isa = PBXGroup;
 			children = (
+				97763C3C1DC3E88D00AF3EAE /* Scoopfus2-Bridging-Header.h */,
 				97763C241DC3E69000AF3EAE /* scoopfus2 */,
 				97763C231DC3E69000AF3EAE /* Products */,
+				97763C3D1DC3E93600AF3EAE /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -56,8 +63,8 @@
 		97763C241DC3E69000AF3EAE /* scoopfus2 */ = {
 			isa = PBXGroup;
 			children = (
+				97763C3A1DC3E83F00AF3EAE /* MicrosoftAzureMobile.framework */,
 				97763C251DC3E69100AF3EAE /* AppDelegate.swift */,
-				97763C271DC3E69100AF3EAE /* ViewController.swift */,
 				97763C291DC3E69200AF3EAE /* Main.storyboard */,
 				97763C2F1DC3E69300AF3EAE /* Assets.xcassets */,
 				97763C311DC3E69400AF3EAE /* LaunchScreen.storyboard */,
@@ -65,6 +72,14 @@
 				97763C2C1DC3E69300AF3EAE /* scoopfus2.xcdatamodeld */,
 			);
 			path = scoopfus2;
+			sourceTree = "<group>";
+		};
+		97763C3D1DC3E93600AF3EAE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				97763C3E1DC3E93600AF3EAE /* WebKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -141,7 +156,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				97763C2E1DC3E69300AF3EAE /* scoopfus2.xcdatamodeld in Sources */,
-				97763C281DC3E69100AF3EAE /* ViewController.swift in Sources */,
 				97763C261DC3E69100AF3EAE /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -266,10 +280,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 4M4S8ZQMAC;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/scoopfus2",
+				);
 				INFOPLIST_FILE = scoopfus2/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = fus.josefus.scoopfus2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Scoopfus2-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -279,10 +298,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 4M4S8ZQMAC;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/scoopfus2",
+				);
 				INFOPLIST_FILE = scoopfus2/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = fus.josefus.scoopfus2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Scoopfus2-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
