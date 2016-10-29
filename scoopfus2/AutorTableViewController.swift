@@ -8,6 +8,8 @@
 
 import UIKit
 
+typealias AutorRecord = Dictionary<String, AnyObject>
+
 class AutorTableViewController: UITableViewController {
     
     var client: MSClient = MSClient(applicationURL: URL(string: "http://scoopfus1-practica.azurewebsites.net")!)
@@ -23,7 +25,7 @@ class AutorTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
-       // addNewAutor("Antoñito")
+        //addNewAutor("Pepito")
         readAllItemsInTable()
     }
 
@@ -56,14 +58,19 @@ class AutorTableViewController: UITableViewController {
         
          let tableMS = client.table(withName: "Autores")
         
-        let predicate = NSPredicate(format: "name == 'Josefus'")
+        // let predicate = NSPredicate(format: "name == 'Josefus'")
         
-        tableMS.read(with: predicate) { (result, error) in
+        tableMS.read { (result, error) in
             
             if let _ = error {
                 
                 print(error)
                 return
+            }
+            
+            if !(self.model?.isEmpty)!{
+                
+                self.model?.removeAll()
             }
             
             if let items = result {
@@ -78,10 +85,54 @@ class AutorTableViewController: UITableViewController {
                     self.tableView.reloadData()
                 }
             }
-        
+            
         }
+        
+        /*     tableMS.read(with: predicate) { (result, error) in
+         
+         if let _ = error {
+         
+         print(error)
+         return
+         }
+         
+         if let items = result {
+         
+         for item in items.items! {
+         
+         self.model?.append(item as! [String : AnyObject])
+         }
+         
+         DispatchQueue.main.async {
+         
+         self.tableView.reloadData()
+         }
+         }
+         
+         } */
     }
 
+    
+        func deleteRecord(_ item: AutorRecord) {
+            
+            let tableMS = client.table(withName: "Autores")
+            
+            tableMS.delete(item) { (reult, error) in
+                
+                if let _ = error {
+                    print(error)
+                    return
+                }
+                
+                // refrescar la tabla
+                self.readAllItemsInTable()
+            }
+            
+            
+        }
+
+        
+  
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -124,17 +175,25 @@ class AutorTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
+            tableView.beginUpdates()
             tableView.deleteRows(at: [indexPath], with: .fade)
+            let item = self.model?[indexPath.row]
+            
+            self.deleteRecord(item!)
+            self.model?.remove(at: indexPath.row)
+            
+            tableView.endUpdates()
+
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
     }
-    */
+    
 
     /*
     // Override to support rearranging the table view.
