@@ -29,7 +29,13 @@
                             <outlet property="delegate" destination="Fjp-ax-ZM0" id="6XS-zv-QET"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="c18-U9-Zds"/>
+                    <navigationItem key="navigationItem" id="c18-U9-Zds">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="WLy-aa-K4K">
+                            <connections>
+                                <action selector="newAutor:" destination="Fjp-ax-ZM0" id="v0U-t9-dph"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5Dg-eT-Pvz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

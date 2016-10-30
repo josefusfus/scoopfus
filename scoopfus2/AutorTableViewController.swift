@@ -19,27 +19,53 @@ class AutorTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
         //addNewAutor("Pepito")
         readAllItemsInTable()
     }
 
+    @IBAction func newAutor(_ sender: AnyObject) {
+        
+        let alert = UIAlertController(title: "Nuevo Autor", message: "Escribe el nombre de un autor", preferredStyle: .alert)
+        
+        
+        let actionOk = UIAlertAction(title: "OK", style: .default) { (alertAction) in
+            let nameAutor = alert.textFields![0] as UITextField
+            let secondName = alert.textFields![1] as UITextField
+            
+            
+            self.addNewAutor(nameAutor.text!, secondName: secondName.text!)
+            
+            self.readAllItemsInTable()
+            
+        }
+        let actionCancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alert.addAction(actionOk)
+        alert.addAction(actionCancel)
+        alert.addTextField { (textField) in
+            
+            textField.placeholder = "Introduce un nombre del autor"
+            
+        }
+        
+        alert.addTextField {(textfield2) in
+            textfield2.placeholder = "Introduce los apellidos"
+        }
+        present(alert, animated: true, completion: nil)
+        
+        
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
     // MARK: - Insert en la tabla de autores
-    func addNewAutor(_ name: String) {
+    func addNewAutor(_ name: String, secondName: String) {
         
         let tableMS = client.table(withName: "Autores")
         
-        tableMS.insert(["name" : name]) { (result, error) in
+        tableMS.insert(["name" : name, "secondname": secondName]) { (result, error) in
             
             if let _ = error {
                 
@@ -48,6 +74,7 @@ class AutorTableViewController: UITableViewController {
             }
             
             print(result)
+            self.readAllItemsInTable()
             
             }
         
