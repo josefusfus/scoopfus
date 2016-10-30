@@ -100,6 +100,12 @@
                                             <action selector="updateNewDataAutor:" destination="mnE-Sg-WMM" id="0MC-Gn-vNZ"/>
                                         </connections>
                                     </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="eW6-I6-UPY"/>
+                                    <barButtonItem title="Call" id="lqQ-FE-4Lg">
+                                        <connections>
+                                            <action selector="callCustomApiAction:" destination="mnE-Sg-WMM" id="NEv-nX-tKY"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                             </toolbar>
                         </subviews>

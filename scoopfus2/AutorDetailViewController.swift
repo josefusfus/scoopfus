@@ -56,8 +56,18 @@ class AutorDetailViewController: UIViewController {
         
         
     }
+    
+    @IBAction func callCustomApiAction(_ sender: AnyObject) {
+        
+        callCustomApi()
+        
+        
+    }
+    
         override func viewDidLoad() {
         super.viewDidLoad()
+            
+           // callCustomApi()
 
         // Do any additional setup after loading the view.
     }
@@ -93,7 +103,44 @@ class AutorDetailViewController: UIViewController {
         
     }
     
+    func callCustomApi() {
+        
+        
+        client?.invokeAPI("customapi1",
+                          body: nil,
+                          httpMethod: "GET",
+                          parameters: ["nombre" : namelbl.text],
+                          headers: nil,
+                          completion: { ( result, response, error) in
+                            
+                            
+                            if let _ = error {
+                                
+                                print(error)
+                                return
+                            }
+                            
+                            
+                            print(result)
+                        
+        
+                        })
+        
+        
+                    }
+    
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     /*
     // MARK: - Navigation
