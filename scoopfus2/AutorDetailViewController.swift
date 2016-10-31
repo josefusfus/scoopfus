@@ -50,6 +50,7 @@ class AutorDetailViewController: UIViewController {
 }
 
     
+    
     @IBAction func updateNewDataAutor(_ sender: AnyObject) {
         
         updateAutor()
@@ -122,6 +123,7 @@ class AutorDetailViewController: UIViewController {
                             
                             
                             print(result)
+                            
                         
         
                         })

@@ -8,20 +8,44 @@
 
 import UIKit
 
-typealias AutorRecord = Dictionary<String, AnyObject>
+//typealias AutorRecord = Dictionary<String, AnyObject>
 
 class AutorTableViewController: UITableViewController {
     
-    var client: MSClient = MSClient(applicationURL: URL(string: "http://scoopfus1-practica.azurewebsites.net")!)
+    var client: MSClient = MSClient(applicationURL: URL(string: "https://scoopfus1-practica.azurewebsites.net")!)
 
     var model: [Dictionary<String, AnyObject>]? = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
-        //addNewAutor("Pepito")
+        if let _ = client.currentUser {
+       
         readAllItemsInTable()
+            
+        } else {
+            
+            doLoginInFacebook()
+            
+        }
+    }
+    
+    func doLoginInFacebook(){
+        
+        client.login(withProvider: "facebook", parameters: nil, controller: self, animated: true) { (user, error) in
+         
+            if let _ = error {
+                
+                print(error)
+                return
+            }
+            
+            if let _ = user {
+                
+                self.readAllItemsInTable()
+            }
+            
+        }
     }
 
     @IBAction func newAutor(_ sender: AnyObject) {
@@ -36,7 +60,7 @@ class AutorTableViewController: UITableViewController {
             
             self.addNewAutor(nameAutor.text!, secondName: secondName.text!)
             
-            self.readAllItemsInTable()
+           
             
         }
         let actionCancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
@@ -83,11 +107,7 @@ class AutorTableViewController: UITableViewController {
     
     func readAllItemsInTable() {
         
-         let tableMS = client.table(withName: "Autores")
-        
-        // let predicate = NSPredicate(format: "name == 'Josefus'")
-        
-        tableMS.read { (result, error) in
+        client.invokeAPI("readAllRecords", body: nil, httpMethod: "GET", parameters: nil, headers: nil) { (result,response,error) in
             
             if let _ = error {
                 
@@ -100,11 +120,13 @@ class AutorTableViewController: UITableViewController {
                 self.model?.removeAll()
             }
             
-            if let items = result {
+            if let _ = result {
                 
-                for item in items.items! {
+                let json = result as! [AutorRecord]
+                
+                for item in json {
                     
-                    self.model?.append(item as! [String : AnyObject])
+                    self.model?.append(item)
                 }
                 
                 DispatchQueue.main.async {
@@ -112,8 +134,8 @@ class AutorTableViewController: UITableViewController {
                     self.tableView.reloadData()
                 }
             }
-            
         }
+
         
         /*     tableMS.read(with: predicate) { (result, error) in
          
@@ -243,7 +265,7 @@ class AutorTableViewController: UITableViewController {
             let vc = segue.destination as? AutorDetailViewController
             
             vc?.client = client
-            vc?.model = sender as! AutorRecord
+            vc?.model = sender as? AutorRecord
             
         
     }
