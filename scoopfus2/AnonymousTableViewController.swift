@@ -15,6 +15,7 @@ class AnonymousTableViewController: UITableViewController {
     
     var client: MSClient = MSClient(applicationURL: URL(string: "https://scoopfus1-practica.azurewebsites.net")!)
     
+   
     var model: [Dictionary<String, AnyObject>]? = []
     
     
@@ -97,7 +98,7 @@ class AnonymousTableViewController: UITableViewController {
         
         let item = model?[indexPath.row]
         
-        cell.textLabel?.text = item?["name"] as! String?
+        cell.textLabel?.text = item?["title"] as! String?
         
         return cell
         
@@ -108,7 +109,7 @@ class AnonymousTableViewController: UITableViewController {
         
         let item = model?[indexPath.row]
         
-        performSegue(withIdentifier: "detalleNoticia", sender: item)
+        performSegue(withIdentifier: "detalleNoticiaLector", sender: item)
     }
     
     
@@ -121,9 +122,9 @@ class AnonymousTableViewController: UITableViewController {
  // Get the new view controller using segue.destinationViewController.
  // Pass the selected object to the new view controller.
  
-    if segue.identifier == "detalleNoticia"{
+    if segue.identifier == "detalleNoticiaLector"{
  
-        let vc = segue.destination as? AutorDetailViewController
+        let vc = segue.destination as? detalleNoticiaViewController
  
         vc?.client = client
         vc?.model = sender as? AutorRecord

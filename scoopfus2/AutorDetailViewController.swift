@@ -15,7 +15,7 @@ class AutorDetailViewController: UIViewController {
     
     @IBOutlet weak var namelbl: UILabel! {
         didSet{
-        namelbl.text = model?["name"] as! String?
+        namelbl.text = model?["title"] as! String?
         }
     }
     
@@ -83,7 +83,7 @@ class AutorDetailViewController: UIViewController {
     
     func updateAutor() {
         
-        let tableAz = client?.table(withName: "Autores")
+        let tableAz = client?.table(withName: "Noticias")
         
         // check de datos
         model!["style"] = styletxt.text as AnyObject?

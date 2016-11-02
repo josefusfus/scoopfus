@@ -21,17 +21,7 @@ class PrincipalViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        /*
-        if let _ = client.currentUser {
-            
-            //readAllItemsInTable()
-            
-        } else {
-            
-            doLoginInFacebook()
-            
-        }*/
-    
+           
     }
     
     override func didReceiveMemoryWarning() {
@@ -39,25 +29,7 @@ class PrincipalViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-  /*
-    func doLoginInFacebook(){
-        
-        client.login(withProvider: "facebook", parameters: nil, controller: self, animated: true) { (user, error) in
-            
-            if let _ = error {
-                
-                print(error)
-                return
-            }
-            
-            if let _ = user {
-                
-                //self.readAllItemsInTable()
-            }
-            
-        }
-    } */
-
+  
 
     @IBAction func loginAutor(_ sender: AnyObject) {
         

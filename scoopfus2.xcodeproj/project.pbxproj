@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		97077D921DC963C700F7E677 /* detalleNoticiaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97077D911DC963C700F7E677 /* detalleNoticiaViewController.swift */; };
 		97763C261DC3E69100AF3EAE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97763C251DC3E69100AF3EAE /* AppDelegate.swift */; };
 		97763C2B1DC3E69200AF3EAE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97763C291DC3E69200AF3EAE /* Main.storyboard */; };
 		97763C2E1DC3E69300AF3EAE /* scoopfus2.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 97763C2C1DC3E69300AF3EAE /* scoopfus2.xcdatamodeld */; };
@@ -21,6 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		97077D911DC963C700F7E677 /* detalleNoticiaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = detalleNoticiaViewController.swift; sourceTree = "<group>"; };
 		97763C221DC3E68F00AF3EAE /* scoopfus2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = scoopfus2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		97763C251DC3E69100AF3EAE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		97763C2A1DC3E69200AF3EAE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -97,6 +99,7 @@
 				97763C411DC3EBFF00AF3EAE /* AutorTableViewController.swift */,
 				97763C431DC5833100AF3EAE /* AutorDetailViewController.swift */,
 				97763C481DC7C52F00AF3EAE /* AnonymousTableViewController.swift */,
+				97077D911DC963C700F7E677 /* detalleNoticiaViewController.swift */,
 			);
 			name = Vcs;
 			sourceTree = "<group>";
@@ -188,6 +191,7 @@
 				97763C261DC3E69100AF3EAE /* AppDelegate.swift in Sources */,
 				97763C461DC7BFB900AF3EAE /* PrincipalViewController.swift in Sources */,
 				97763C421DC3EBFF00AF3EAE /* AutorTableViewController.swift in Sources */,
+				97077D921DC963C700F7E677 /* detalleNoticiaViewController.swift in Sources */,
 				97763C441DC5833100AF3EAE /* AutorDetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

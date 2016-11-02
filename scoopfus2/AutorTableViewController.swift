@@ -50,15 +50,17 @@ class AutorTableViewController: UITableViewController {
 
     @IBAction func newAutor(_ sender: AnyObject) {
         
-        let alert = UIAlertController(title: "Nuevo Autor", message: "Escribe el nombre de un autor", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Nueva noticia", message: "Escribe el titulo de la noticia", preferredStyle: .alert)
         
         
         let actionOk = UIAlertAction(title: "OK", style: .default) { (alertAction) in
-            let nameAutor = alert.textFields![0] as UITextField
-            let secondName = alert.textFields![1] as UITextField
+            let tituloNoticia = alert.textFields![0] as UITextField
+            let textoNoticia = alert.textFields![1] as UITextField
+            let autorNoticia = alert.textFields![2] as UITextField
+           
             
             
-            self.addNewAutor(nameAutor.text!, secondName: secondName.text!)
+            self.addNewAutor(tituloNoticia.text!, text: textoNoticia.text!, autor: autorNoticia.text!)
             
            
             
@@ -68,13 +70,18 @@ class AutorTableViewController: UITableViewController {
         alert.addAction(actionCancel)
         alert.addTextField { (textField) in
             
-            textField.placeholder = "Introduce un nombre del autor"
+            textField.placeholder = "Introduce el titulo de la noticia"
             
         }
         
         alert.addTextField {(textfield2) in
-            textfield2.placeholder = "Introduce los apellidos"
+            textfield2.placeholder = "Introduce el texto"
         }
+        
+        alert.addTextField {(textfield3) in
+            textfield3.placeholder = "Introduce el autor"
+        }
+
         present(alert, animated: true, completion: nil)
         
         
@@ -85,11 +92,11 @@ class AutorTableViewController: UITableViewController {
     }
     
     // MARK: - Insert en la tabla de autores
-    func addNewAutor(_ name: String, secondName: String) {
+    func addNewAutor(_ title: String, text: String, autor: String) {
         
-        let tableMS = client.table(withName: "Autores")
+        let tableMS = client.table(withName: "Noticias")
         
-        tableMS.insert(["name" : name, "secondname": secondName]) { (result, error) in
+        tableMS.insert(["title" : title, "text": text, "author": autor]) { (result, error) in
             
             if let _ = error {
                 
@@ -164,7 +171,7 @@ class AutorTableViewController: UITableViewController {
     
         func deleteRecord(_ item: AutorRecord) {
             
-            let tableMS = client.table(withName: "Autores")
+            let tableMS = client.table(withName: "Noticias")
             
             tableMS.delete(item) { (reult, error) in
                 
@@ -209,7 +216,7 @@ class AutorTableViewController: UITableViewController {
 
         let item = model?[indexPath.row]
         
-        cell.textLabel?.text = item?["name"] as! String?
+        cell.textLabel?.text = item?["title"] as! String?
         
         return cell
 
@@ -248,7 +255,7 @@ class AutorTableViewController: UITableViewController {
         
         let item = model?[indexPath.row]
         
-        performSegue(withIdentifier: "detalleAutor", sender: item)
+        performSegue(withIdentifier: "detalleNoticia", sender: item)
     }
 
    
@@ -260,7 +267,7 @@ class AutorTableViewController: UITableViewController {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         
-        if segue.identifier == "detalleAutor"{
+        if segue.identifier == "detalleNoticia"{
             
             let vc = segue.destination as? AutorDetailViewController
             
