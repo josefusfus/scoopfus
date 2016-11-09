@@ -1,5 +1,9 @@
 Entrega provisional porque no está terminado.
 
+Repo del backend
+
+https://github.com/josefusfus/BackendAppService.git
+
 Lo que funciona :
 Se puede autenticar con facebook.
 Se pueden crear noticias en modo autenticado.
