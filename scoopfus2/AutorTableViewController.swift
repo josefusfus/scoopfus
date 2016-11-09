@@ -63,31 +63,11 @@ class AutorTableViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    // MARK: - Insert en la tabla de autores
-    /*
-    func addNewAutor(_ title: String, text: String, autor: String) {
-        
-        let tableMS = client.table(withName: "Noticias")
-        
-        tableMS.insert(["title" : title, "text": text, "author": autor]) { (result, error) in
-            
-            if let _ = error {
-                
-                print(error)
-                return
-            }
-            self.readAllItemsInTable()
-            print(result)
-            
-            
-            }
-        
-        }  */
     
     
     func readAllItemsInTable() {
         
-        predicate = NSPredicate(format: "userid == %@", (client.currentUser?.userId!)!)
+       // predicate = NSPredicate(format: "userid == %@", (client.currentUser?.userId!)!)
         
         client.invokeAPI("readAllRecords", body: nil, httpMethod: "GET", parameters:["userid": (client.currentUser?.userId!)!] , headers: nil) { (result,response,error) in
             
@@ -119,29 +99,7 @@ class AutorTableViewController: UITableViewController {
         }
 
         
-        /*     tableMS.read(with: predicate) { (result, error) in
-         
-         if let _ = error {
-         
-         print(error)
-         return
-         }
-         
-         if let items = result {
-         
-         for item in items.items! {
-         
-         self.model?.append(item as! [String : AnyObject])
-         }
-         
-         DispatchQueue.main.async {
-         
-         self.tableView.reloadData()
-         }
-         }
-         
-         } */
-    }
+           }
 
     
         func deleteRecord(_ item: AutorRecord) {
@@ -261,16 +219,7 @@ class AutorTableViewController: UITableViewController {
         }    
     }
     
-    /*
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        let item = model?[indexPath.row]
-        
-        performSegue(withIdentifier: "detalleNoticia", sender: item)
-    }
     
-     */
- 
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
