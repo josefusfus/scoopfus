@@ -47,6 +47,39 @@ class detalleNoticiaViewController: UIViewController {
         
     }
     
+    @IBOutlet weak var textoLatitud: UILabel!{
+        
+        didSet{
+            
+            guard  let latitude = model?["latitude"], !(latitude is NSNull) else {
+                return
+            }
+            
+            textoLatitud.text = "\(latitude)" as? String
+            print(latitude)
+        }
+        
+    }
+
+    
+    @IBOutlet weak var textoLongitud: UILabel!{
+        
+        didSet{
+            
+            guard  let longitude = model?["longitude"], !(longitude is NSNull) else {
+                return
+            }
+            
+            textoLongitud.text = "\(longitude)" as? String
+            
+        }
+        
+    }
+    
+    
+
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

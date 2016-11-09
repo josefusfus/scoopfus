@@ -13,7 +13,7 @@ import UIKit
 
 class AnonymousTableViewController: UITableViewController {
     
-    var client: MSClient = MSClient(applicationURL: URL(string: "https://scoopfus1-practica.azurewebsites.net")!)
+    var client: MSClient = MSClient(applicationURL: URL(string: "http://scoopfus1-practica.azurewebsites.net")!)
     
    
     var model: [Dictionary<String, AnyObject>]? = []
@@ -41,7 +41,7 @@ class AnonymousTableViewController: UITableViewController {
     
     func readAllItemsInTable() {
         
-        client.invokeAPI("readAllRecords", body: nil, httpMethod: "GET", parameters: nil, headers: nil) { (result,response,error) in
+        client.invokeAPI("readAllRecordsAnomymous", body: nil, httpMethod: "GET", parameters: nil, headers: nil) { (result,response,error) in
             
             if let _ = error {
                 
@@ -92,13 +92,17 @@ class AnonymousTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "celdanoticia", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "celdanoticia", for: indexPath) as! CeldaNoticiasLectorTableViewCell
         
         // Configure the cell...
         
         let item = model?[indexPath.row]
         
-        cell.textLabel?.text = item?["title"] as! String?
+        cell.titleCeldaNoticia?.text = item?["title"] as! String?
+        
+        cell.autorCeldaNoticia?.text = item?["author"] as! String?
+        
+        cell.imageviewCeldaNoticia?.image = UIImage(named: "Windows-Azure-logo.jpg")
         
         return cell
         

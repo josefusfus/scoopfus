@@ -8,13 +8,23 @@
 
 import UIKit
 
+
 //typealias AutorRecord = Dictionary<String, AnyObject>
 
 class AutorTableViewController: UITableViewController {
     
+    
     var client: MSClient = MSClient(applicationURL: URL(string: "https://scoopfus1-practica.azurewebsites.net")!)
 
     var model: [Dictionary<String, AnyObject>]? = []
+    
+    
+    let blobClient: AZSCloudBlobClient = (try! AZSCloudStorageAccount(credentials: AZSStorageCredentials(accountName: "practicafusstorage", accountKey: "X9E6W8pcuZWZOSlKiy49KA4cl9RSRP25Uctz0uSF0EefXfgdB8O8DKDYimAIuWZfR25tABXYjsrIzdTAM4rxPA=="), useHttps: true)).getBlobClient()
+    
+    let blobContainer = "fuspracticacontainer"
+    
+    var predicate : NSPredicate?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,50 +58,13 @@ class AutorTableViewController: UITableViewController {
         }
     }
 
-    @IBAction func newAutor(_ sender: AnyObject) {
-        
-        let alert = UIAlertController(title: "Nueva noticia", message: "Escribe el titulo de la noticia", preferredStyle: .alert)
-        
-        
-        let actionOk = UIAlertAction(title: "OK", style: .default) { (alertAction) in
-            let tituloNoticia = alert.textFields![0] as UITextField
-            let textoNoticia = alert.textFields![1] as UITextField
-            let autorNoticia = alert.textFields![2] as UITextField
-           
-            
-            
-            self.addNewAutor(tituloNoticia.text!, text: textoNoticia.text!, autor: autorNoticia.text!)
-            
-           
-            
-        }
-        let actionCancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        alert.addAction(actionOk)
-        alert.addAction(actionCancel)
-        alert.addTextField { (textField) in
-            
-            textField.placeholder = "Introduce el titulo de la noticia"
-            
-        }
-        
-        alert.addTextField {(textfield2) in
-            textfield2.placeholder = "Introduce el texto"
-        }
-        
-        alert.addTextField {(textfield3) in
-            textfield3.placeholder = "Introduce el autor"
-        }
-
-        present(alert, animated: true, completion: nil)
-        
-        
-    }
-    override func didReceiveMemoryWarning() {
+       override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
     // MARK: - Insert en la tabla de autores
+    /*
     func addNewAutor(_ title: String, text: String, autor: String) {
         
         let tableMS = client.table(withName: "Noticias")
@@ -109,12 +82,14 @@ class AutorTableViewController: UITableViewController {
             
             }
         
-        }
+        }  */
     
     
     func readAllItemsInTable() {
         
-        client.invokeAPI("readAllRecords", body: nil, httpMethod: "GET", parameters: nil, headers: nil) { (result,response,error) in
+        predicate = NSPredicate(format: "userid == %@", (client.currentUser?.userId!)!)
+        
+        client.invokeAPI("readAllRecords", body: nil, httpMethod: "GET", parameters:["userid": (client.currentUser?.userId!)!] , headers: nil) { (result,response,error) in
             
             if let _ = error {
                 
@@ -187,6 +162,22 @@ class AutorTableViewController: UITableViewController {
             
         }
 
+    
+    func download(blob b:String, _ completion:  @escaping (Any)->()) {
+        
+        let container = blobClient.containerReference(fromName: blobContainer)
+        
+        let blob = container.blockBlobReference(fromName: b)
+        
+        blob.downloadToData { (error, data) in
+            if let _ = error{
+                print(error)
+                return
+            }
+            completion(data)
+        }
+    }
+
         
   
     // MARK: - Table view data source
@@ -210,13 +201,33 @@ class AutorTableViewController: UITableViewController {
 
   
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CELDA", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CELDANOTICASAUTOR", for: indexPath) as! CeldaNoticiasTableViewCell
 
         // Configure the cell...
 
-        let item = model?[indexPath.row]
+        var item = model?[indexPath.row]
         
-        cell.textLabel?.text = item?["title"] as! String?
+        cell.tituloNoticia?.text = item?["title"] as! String?
+        
+        /*
+        self.download(blob: item.imageURL) { (data) in
+            item.blob = data as? Data
+            cell.ImageNew.image = UIImage(data: data as! Data)
+        } */
+        
+        
+        
+        let publicada = item?["published"] as! Bool?
+        
+        if publicada == true {
+            
+            cell.situacionNoticia.text = "Publicada"
+            cell.estadoBotonPublicar.setTitle("Dar de baja", for: .normal)
+            
+        }else{
+            cell.situacionNoticia.text = "No publicada"
+            cell.estadoBotonPublicar.setTitle("Publicar", for: .normal)
+        }
         
         return cell
 
@@ -250,16 +261,16 @@ class AutorTableViewController: UITableViewController {
         }    
     }
     
-    
+    /*
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let item = model?[indexPath.row]
         
         performSegue(withIdentifier: "detalleNoticia", sender: item)
     }
-
-   
-  
+    
+     */
+ 
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -267,17 +278,21 @@ class AutorTableViewController: UITableViewController {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         
-        if segue.identifier == "detalleNoticia"{
+        if segue.identifier == "nuevaNoticia"{
             
             let vc = segue.destination as? AutorDetailViewController
             
             vc?.client = client
             vc?.model = sender as? AutorRecord
             
+            
         
     }
    
 
 }
+ 
+    
+
 
 }

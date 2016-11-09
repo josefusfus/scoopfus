@@ -7,142 +7,193 @@
 //
 
 import UIKit
+import CoreLocation
 
-class AutorDetailViewController: UIViewController {
+class AutorDetailViewController: UIViewController, CLLocationManagerDelegate {
 
     var model: AutorRecord?
     var client: MSClient?
+    var container: AZSCloudBlobContainer?
+    var locationManager : CLLocationManager?
+    var location : CLLocation = CLLocation(latitude: 0, longitude: 0)
+
     
-    @IBOutlet weak var namelbl: UILabel! {
-        didSet{
-        namelbl.text = model?["title"] as! String?
-        }
-    }
+    let blobClient: AZSCloudBlobClient = (try! AZSCloudStorageAccount(credentials: AZSStorageCredentials(accountName: "practicafusstorage", accountKey: "X9E6W8pcuZWZOSlKiy49KA4cl9RSRP25Uctz0uSF0EefXfgdB8O8DKDYimAIuWZfR25tABXYjsrIzdTAM4rxPA=="), useHttps: true)).getBlobClient()
     
-    @IBOutlet weak var secondlbl: UILabel!{
+    
+    //let client : MSClient = MSClient(applicationURLString: "https://scoopfus1-practica.azurewebsites.net")
+    
+   // let accountKey = "X9E6W8pcuZWZOSlKiy49KA4cl9RSRP25Uctz0uSF0EefXfgdB8O8DKDYimAIuWZfR25tABXYjsrIzdTAM4rxPA=="
+    
+    // let accountName = "practicafusstorage"
+    let blobContainer = "fuspracticacontainer"
+    
+    //let account : AZSCloudStorageAccount
+    
+    
+       //   let credentials = AZSStorageCredentials(accountName: accountName, accountKey: accountKey)
+        // account = try! AZSCloudStorageAccount(credentials: credentials, useHttps: true)
+   
+    
+    
+    
+   
+
+    
+       @IBOutlet weak var titulotxt: UITextField! {
         didSet{
-            secondlbl.text = model?["secondname"] as! String?
             
-        }
-    }
-    
-    @IBOutlet weak var styletxt: UITextField! {
-        didSet{
-            guard let estilo = model?["style"], !(estilo is NSNull) else {
+            guard let estilo = model?["title"], !(estilo is NSNull) else {
                 
                 return
             }
             
-            styletxt.text = estilo as? String
+            titulotxt.text = estilo as? String
         }
     }
+
     
-    
-    @IBOutlet weak var idiomatxt: UITextField! {
+    @IBOutlet weak var textoNoticiatxt: UITextField! {
                 didSet {
-            guard let idioma = model?["idioma"], !(idioma is NSNull) else {
+                    
+            guard let contenido = model?["text"], !(contenido is NSNull) else {
     
                 return
             }
     
-            idiomatxt.text = idioma as? String
+            textoNoticiatxt.text = contenido as? String
     }
 }
 
     
+    @IBOutlet weak var autortxt: UITextField!
     
-    @IBAction func updateNewDataAutor(_ sender: AnyObject) {
+    @IBAction func addNewNews(_ sender: AnyObject) {
         
-        updateAutor()
-        
+      addNewAutor(titulotxt.text!, text: textoNoticiatxt.text!, autor: autortxt.text!)
         
     }
     
-    @IBAction func callCustomApiAction(_ sender: AnyObject) {
-        
-        callCustomApi()
-        
-        
-    }
+    @IBOutlet weak var photoImageView: UIImageView!
     
         override func viewDidLoad() {
         super.viewDidLoad()
             
-           // callCustomApi()
-
-        // Do any additional setup after loading the view.
+        self.locationManager = CLLocationManager()
+        self.locationManager?.delegate = self
+        self.locationManager?.requestWhenInUseAuthorization()
+        self.locationManager?.desiredAccuracy = kCLLocationAccuracyBest
+        self.locationManager?.startUpdatingLocation()
+    
     }
+    
+    
+    // Localización actual
+    
+    public func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        self.locationManager?.stopUpdatingLocation()
+        self.locationManager = nil
+        if let lastLocation:CLLocation = locations.last {
+            self.location = lastLocation
+        }
+    }
+    
+    @IBAction func selectedImage(_ sender: AnyObject) {
+        
+        // Crear una instancia de UIImagePicker
+        let picker = UIImagePickerController()
+        
+        // Configurarlo
+    
+        if UIImagePickerController.isCameraDeviceAvailable(.rear){
+            picker.sourceType = .camera
+        }else{
+            // me conformo con el carrete */
+            picker.sourceType = .photoLibrary
+       
+        }
+        
+        
+        picker.delegate = self
+        
+        // Mostrarlo de forma modal
+        self.present(picker, animated: true) {
+            // Por si quieres hacer algo nada más
+            // mostrarse el picker
+        }
 
+        
     
-    
+}
+
+
+
+
+
+
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    
-    func updateAutor() {
+
+
+    func addNewAutor(_ title: String, text: String, autor: String) {
         
-        let tableAz = client?.table(withName: "Noticias")
+      /*  let imageData = UIImageJPEGRepresentation(["image"] as! UIImage, 0.85)
         
-        // check de datos
-        model!["style"] = styletxt.text as AnyObject?
-        model!["idioma"] = idiomatxt.text as AnyObject?
+        let urlBlob = UUID().uuidString
         
+        self.uploadBlob(data: imageData!, nameFile: urlBlob) */
         
-        tableAz?.update(model!, completion: { (result, error) in
+        let tableMS = client?.table(withName: "Noticias")
         
+        tableMS?.insert(["title" : title,
+                         "text": text,
+                         "author": autor,
+                         "published": false,
+                         //"image":photoImageView.image
+                         "latitude" : self.location.coordinate.latitude,
+                         "longitude" : self.location.coordinate.longitude]) { (result, error) in
+            
             if let _ = error {
                 
                 print(error)
                 return
             }
-        
+            //self.readAllItemsInTable()
+            print(result as Any)
             
-            print(result)
-        })
+            
+        }
         
     }
     
-    func callCustomApi() {
-        
-        
-        client?.invokeAPI("customapi1",
-                          body: nil,
-                          httpMethod: "GET",
-                          parameters: ["nombre" : namelbl.text],
-                          headers: nil,
-                          completion: { ( result, response, error) in
-                            
-                            
-                            if let _ = error {
-                                
-                                print(error)
-                                return
-                            }
-                            
-                            
-                            print(result)
-                            
-                        
-        
-                        })
-        
-        
-                    }
     
+    /*
+    func uploadBlob(data:Data, nameFile: String){
+        
+        let client : AZSCloudBlobClient? = (try! AZSCloudStorageAccount(credentials: AZSStorageCredentials(accountName: "practicafusstorage", accountKey: "X9E6W8pcuZWZOSlKiy49KA4cl9RSRP25Uctz0uSF0EefXfgdB8O8DKDYimAIuWZfR25tABXYjsrIzdTAM4rxPA=="), useHttps: true)).getBlobClient()
+    
+        let container = client?.containerReference(fromName: blobContainer)
+        
+        container?.createContainerIfNotExists(with: .container, requestOptions: nil, operationContext: nil, completionHandler: { (error, status) in
+            
+            if let _ = error{
+                print(error)
+                return
+            }
+            let blob = container?.blockBlobReference(fromName: nameFile )
+            blob?.upload(from: data) { (e) in
+                if e != nil{
+                    print(error)
+                    return
+                }
+            }
+        })
+    }
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    */
 
     /*
     // MARK: - Navigation
@@ -155,3 +206,24 @@ class AutorDetailViewController: UIViewController {
     */
 
 }
+
+
+    extension AutorDetailViewController:UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+        
+        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+            
+            let size = CGSize(width: 600, height: 600);
+            
+            let photo = info[UIImagePickerControllerOriginalImage] as! UIImage?
+            
+            photoImageView.image = photo
+            
+            self.dismiss(animated: true) {
+                //
+            }
+            
+        }
+}
+
+
+
